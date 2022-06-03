@@ -1,1 +1,1 @@
-### Archivos de teoria de las asignaturas
+### Archivos teóricos de las asignaturas
