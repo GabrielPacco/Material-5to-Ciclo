@@ -1,0 +1,53 @@
+mysql -u root -h localhost -p
+use Empresa;
+select * from Empleados;
+####################################
+Niveles de aislamiento
+####################################
+-Serializable
+
+sesion1
+start transaction
+update Empleados set Sueldo=3000  where DNI='12345678L';
+commit; 
+
+sesion2
+select * from Empleados;
+
+#####################################
+
+-Repeateble read (Lectura sucia):
+
+sesion1
+start transaction
+update Empleados set Sueldo=3000  where DNI='12345678L'; 
+
+sesion2
+select * from Empleados;
+
+#####################################
+
+-Read committed (Lectura no repetidas):
+
+sesion1
+start transaction
+update Empleados set Sueldo=3000  where DNI='12345678L'; 
+commit;
+
+sesion2
+select * from Empleados;
+select * from Empleados;
+
+#####################################
+
+-Read uncommitted(Lectura fantasma):
+
+sesion1
+start transaction
+insert into Empleados(DNI,Nombre,Sueldo) values('12345678M','Juan',500);
+insert into Empleados(DNI,Nombre,Sueldo) values('12345678N','Ana',700);
+commit;
+
+sesion2
+select * from Empleados;
+select * from Empleados;
